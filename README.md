@@ -40,3 +40,19 @@ All sample opportunities are marked `DEMO DATA`. The app does not invest, transf
 RESEND_API_KEY=your_resend_key
 RESEND_FROM_EMAIL="Opportunity Scout AI <reports@verified-domain.com>"
 ```
+
+## Python chart script
+
+Generate market-analysis charts from a CSV:
+
+```bash
+python -m pip install -r scripts/requirements.txt
+python scripts/opportunity_market_charts.py --input data/demo_market_data.csv --output reports/charts
+```
+
+The script creates:
+
+- `market_size_range.png`
+- `competitor_price_map.png`
+- `ranking_return_scenarios.png`
+- `analysis_summary.csv`

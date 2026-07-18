@@ -1,0 +1,6 @@
+opportunity,sector,city,tam_usd,sam_usd,som_usd,competitors,comparable_price_usd,asking_price_usd,required_investment_usd,base_return_pct,downside_return_pct,risk_adjusted_score,data_quality_score
+DEMO DATA - Boutique hotel repositioning,Hotels and hospitality,Beirut,950000000,210000000,18500000,38,1720000,1850000,2350000,12.4,4.1,48,73
+DEMO DATA - Last-mile logistics warehouse,Warehouses and logistics,Metn,620000000,155000000,22400000,16,1420000,1350000,1580000,10.9,6.2,59,81
+DEMO DATA - Specialty food production SME,Agriculture and food production,Bekaa,780000000,120000000,16800000,27,980000,920000,1250000,15.1,2.8,54,69
+DEMO DATA - Medical clinic expansion,Healthcare businesses,Beirut,520000000,98000000,11200000,44,1180000,1250000,1500000,11.8,3.6,51,64
+DEMO DATA - Solar rooftop portfolio,Renewable energy,Zahle,410000000,87000000,9400000,21,760000,810000,1080000,13.9,5.5,56,67
