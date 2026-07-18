@@ -320,6 +320,26 @@ export default function Home() {
             <AnalysisPanel />
             <ReportPanel onPreview={createEmailPreview} preview={emailPreview} consent={emailConsent} onConsentChange={setEmailConsent} />
           </section>
+
+          <section className="border border-gold/20 bg-navy p-4">
+            <SectionTitle icon={BadgeCheck} label="Analysis output checkpoint" />
+            <div className="mt-4 grid gap-3 md:grid-cols-4">
+              {[
+                ["Market size", "A defensible TAM/SAM/SOM range with cited sources and formulas."],
+                ["Competition", "Comparable businesses, real prices, and competitor count by location."],
+                ["Charts", "At least two readable visuals a reviewer can understand without narration."],
+                ["Evidence", "Every claim linked to source URL, publication date, data year, and retrieval date."]
+              ].map(([title, text]) => (
+                <div key={title} className="border border-paper/10 bg-paper/5 p-3">
+                  <p className="font-semibold text-paper">{title}</p>
+                  <p className="mt-2 text-sm leading-6 text-parchment/68">{text}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-4 border border-sage/40 bg-sage/10 p-3 text-sm leading-6 text-parchment/75">
+              Production analysis can use internal chart generation first, or export a cleaned dataset for tools like Julius AI or a Colab Python workflow. The app remains the source of record for assumptions, citations, and report approval.
+            </p>
+          </section>
         </div>
       </div>
 

@@ -24,10 +24,13 @@ The project is configured as a Next.js deployment in `vercel.json`.
 - Duplicate/risk-aware ranking model
 - Opportunity detail review with verification warnings
 - Market projection chart, sensitivity heat map, and risk matrix
+- Analysis checkpoint for defensible market size, competitive picture, real prices, and readable charts
 - PDF report control placeholder
 - Consent-gated Resend email endpoint with demo preview fallback
 
-The intended production flow is: investor fills the questionnaire, confirms legal authority, submits the mandate, then server-side jobs run compliant public-source scraping/search, source snapshots, duplicate checks, AI-assisted analysis, ranking, and report generation.
+The intended production flow is: investor fills the questionnaire, confirms legal authority, submits the mandate, then server-side jobs run compliant public-source scraping/search, source snapshots, duplicate checks, AI-assisted analysis, chart generation, ranking, and report generation.
+
+Before a report is considered ready, the analysis must include a defensible market-size range, competitor evidence, real pricing data where available, and at least two readable charts with cited source support.
 
 All sample opportunities are marked `DEMO DATA`. The app does not invest, transfer funds, contact sellers, guarantee returns, or scrape prohibited sources. Real email requires `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, a recipient email, and explicit user consent.
 
