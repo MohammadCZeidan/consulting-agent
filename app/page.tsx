@@ -93,6 +93,7 @@ export default function Home() {
   const [categoryFilter, setCategoryFilter] = useState("All selected");
   const [emailPreview, setEmailPreview] = useState<string | null>(null);
   const [emailConsent, setEmailConsent] = useState(false);
+  const [researchQueued, setResearchQueued] = useState(false);
 
   const selected = demoOpportunities.find((item) => item.id === selectedId) ?? demoOpportunities[0];
   const filtered = useMemo(() => {
@@ -155,8 +156,8 @@ export default function Home() {
             <div className="border border-ink/15 p-4">
               <div className="mb-4 flex items-center justify-between gap-4 border-b border-ink/10 pb-4">
                 <div>
-                  <p className="font-mono text-xs uppercase tracking-[0.2em] text-brass">Live research docket</p>
-                  <h2 className="font-display text-3xl font-semibold">USD {profile.capital.toLocaleString()} mandate</h2>
+                  <p className="font-mono text-xs uppercase tracking-[0.2em] text-brass">{researchQueued ? "Research job queued" : "User mandate draft"}</p>
+                  <h2 className="font-display text-3xl font-semibold">USD {profile.capital.toLocaleString()} user-filled mandate</h2>
                 </div>
                 <BadgeCheck className="h-7 w-7 text-sage" />
               </div>
@@ -189,6 +190,9 @@ export default function Home() {
       <div className="mx-auto grid max-w-7xl gap-6 px-5 py-8 lg:grid-cols-[310px_1fr]">
         <aside id="questionnaire" className="h-fit border border-gold/20 bg-navy p-4">
           <SectionTitle icon={SlidersHorizontal} label="Investor questionnaire" />
+          <p className="mt-3 text-sm leading-6 text-parchment/70">
+            These fields are filled by the investor. After confirmation, the next stage runs permitted public-source discovery, deduping, and AI-assisted analysis.
+          </p>
           <div className="mt-4 grid gap-3">
             <Field label="Full name" value={profile.fullName} onChange={(fullName) => setProfile({ ...profile, fullName })} />
             <Field label="Verified email" value={profile.email} onChange={(email) => setProfile({ ...profile, email })} />
@@ -201,12 +205,37 @@ export default function Home() {
               <input type="checkbox" checked={profile.legalConfirmation} onChange={(event) => setProfile({ ...profile, legalConfirmation: event.target.checked })} className="mt-1" />
               I confirm I am legally able to make investment decisions or am working with an authorized adult or professional adviser.
             </label>
+            <button
+              onClick={() => setResearchQueued(true)}
+              disabled={!profile.legalConfirmation || !profile.email || profile.industries.length === 0}
+              className="inline-flex items-center justify-center gap-2 bg-gold px-4 py-3 text-sm font-semibold text-ink disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <Search className="h-4 w-4" /> Submit mandate
+            </button>
+            {researchQueued && (
+              <div className="border border-sage/50 bg-sage/10 p-3 text-sm leading-6 text-parchment/78">
+                Mandate received. The production workflow will now run compliant scraping/search connectors, source snapshots, duplicate checks, and AI scoring. Demo cards remain separated until real results are retrieved.
+              </div>
+            )}
           </div>
         </aside>
 
         <div className="grid gap-6">
           <section className="border border-gold/20 bg-navy p-4">
             <SectionTitle icon={Filter} label="Search configuration" />
+            <div className="mt-4 grid gap-3 md:grid-cols-4">
+              {[
+                ["1", "User submits mandate"],
+                ["2", "Public sources searched"],
+                ["3", "AI analyzes evidence"],
+                ["4", "Report awaits consent"]
+              ].map(([step, label]) => (
+                <div key={step} className="border border-paper/10 bg-paper/5 p-3">
+                  <p className="font-mono text-[10px] uppercase text-gold">Stage {step}</p>
+                  <p className="mt-2 text-sm text-parchment/78">{label}</p>
+                </div>
+              ))}
+            </div>
             <div className="mt-4 flex flex-wrap gap-2">
               {searchCategories.map((category) => {
                 const selectedCategory = profile.industries.includes(category);
