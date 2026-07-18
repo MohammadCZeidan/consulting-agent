@@ -92,6 +92,7 @@ export default function Home() {
   const [selectedId, setSelectedId] = useState(demoOpportunities[1].id);
   const [categoryFilter, setCategoryFilter] = useState("All selected");
   const [emailPreview, setEmailPreview] = useState<string | null>(null);
+  const [emailConsent, setEmailConsent] = useState(false);
 
   const selected = demoOpportunities.find((item) => item.id === selectedId) ?? demoOpportunities[0];
   const filtered = useMemo(() => {
@@ -104,10 +105,10 @@ export default function Home() {
     const response = await fetch("/api/email-preview", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ capital: profile.capital, currency: profile.currency })
+      body: JSON.stringify({ capital: profile.capital, currency: profile.currency, email: profile.email, consent: emailConsent })
     });
     const data = await response.json();
-    setEmailPreview(`${data.sender}\n${data.subject}`);
+    setEmailPreview(data.status === "sent" ? `Sent with Resend\nMessage ID: ${data.messageId ?? "pending"}\n${data.subject}` : `${data.sender}\n${data.subject}`);
   }
 
   return (
@@ -288,7 +289,7 @@ export default function Home() {
 
           <section className="grid gap-6 xl:grid-cols-2">
             <AnalysisPanel />
-            <ReportPanel onPreview={createEmailPreview} preview={emailPreview} />
+            <ReportPanel onPreview={createEmailPreview} preview={emailPreview} consent={emailConsent} onConsentChange={setEmailConsent} />
           </section>
         </div>
       </div>
@@ -407,7 +408,7 @@ function AnalysisPanel() {
   );
 }
 
-function ReportPanel({ onPreview, preview }: { onPreview: () => void; preview: string | null }) {
+function ReportPanel({ onPreview, preview, consent, onConsentChange }: { onPreview: () => void; preview: string | null; consent: boolean; onConsentChange: (value: boolean) => void }) {
   const riskMatrix = demoOpportunities.map((item) => ({ x: item.scores.riskPenalty, y: item.baseReturn, z: riskAdjustedScore(item), name: item.city }));
   return (
     <section className="border border-gold/20 bg-paper p-4 text-ink">
@@ -425,6 +426,10 @@ function ReportPanel({ onPreview, preview }: { onPreview: () => void; preview: s
           </ScatterChart>
         </ResponsiveContainer>
       </div>
+      <label className="mt-4 flex items-start gap-3 border border-ink/10 bg-[#FBF7EB] p-3 text-sm leading-5 text-ink/70">
+        <input type="checkbox" checked={consent} onChange={(event) => onConsentChange(event.target.checked)} className="mt-1" />
+        I explicitly consent to send this preliminary report by email. If Resend is not configured, the app will show a demo preview only.
+      </label>
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
         <button className="inline-flex items-center justify-center gap-2 border border-ink/15 bg-white px-4 py-3 text-sm font-semibold">
           <Download className="h-4 w-4" /> PDF report
