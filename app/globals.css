@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #07121f;
+  color: #f8f5ee;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #c9a45b;
+  outline-offset: 2px;
+}
+
+.dossier-grid {
+  background-image:
+    linear-gradient(rgba(201, 164, 91, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201, 164, 91, 0.08) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #c9a45b #0b1b2b;
+}
