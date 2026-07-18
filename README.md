@@ -11,6 +11,10 @@ npm run dev
 
 Open http://localhost:3000.
 
+## Vercel
+
+The project is configured as a Next.js deployment in `vercel.json`.
+
 ## Current MVP
 
 - Investor questionnaire with default USD 3,000,000 mandate
